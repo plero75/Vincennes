@@ -6,20 +6,20 @@ const VELIB_URL = "https://prim.iledefrance-mobilites.fr/marketplace/velib/stati
 const STOP_POINTS ={
   rer:{
     name:"RER A Joinville-le-Pont",
-    realtimeUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:43135:,
-    scheduleUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:monomodalStopPlace:43135/route_schedules?line=line:IDFM:C01742&from_datetime=,
+    realtimeUrl:{PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:43135:,
+    scheduleUrl:{PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:monomodalStopPlace:43135/route_schedules?line=line:IDFM:C01742&from_datetime=,
     icon:"img/picto-rer-a.svg"
   },
   bus77:{
     name:"BUS 77 Hippodrome de Vincennes",
-    realtimeUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463641:,
-    scheduleUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463640/route_schedules?line=line:IDFM:C02251&from_datetime=,
+    realtimeUrl:{PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463641:,
+    scheduleUrl:{PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463640/route_schedules?line=line:IDFM:C02251&from_datetime=,
     icon:"img/picto-bus.svg"
   },
   bus201:{
     name:"BUS 201 Ecole du Breuil",
-    realtimeUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463644:,
-    scheduleUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463646/route_schedules?line=line:IDFM:C01219&from_datetime=,
+    realtimeUrl:{PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463644:,
+    scheduleUrl:{PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463646/route_schedules?line=line:IDFM:C01219&from_datetime=,
     icon:"img/picto-bus.svg"
   }
 };
@@ -35,7 +35,7 @@ const VEHICLE_JOURNEY_CACHE ={};
 // Fetch générique JSON
 async function fetchJSON(url, headers ={}){
   const res = await fetch(url,{ headers });
-  if (!res.ok) throw new Error(Erreur HTTP ${res.status});
+  if (!res.ok) throw new Error(Erreur HTTP {res.status});
   return await res.json();
 }
 
@@ -61,7 +61,7 @@ function minutesUntil(dt){
   if (isNaN(t)) return "";
   const diff = (t - now) / 60000;
   if (diff < 1.5) return <span class="imminent">(passage imminent)</span>;
-  return <span class="temps">(${Math.round(diff)} min)</span>;
+  return <span class="temps">({Math.round(diff)} min)</span>;
 }
 
 function getDestinationName(d){
@@ -80,7 +80,7 @@ function getVehicleJourneyRef(mvj){
 async function fetchStopsForJourney(vehicleJourneyRef){
   if (!vehicleJourneyRef) return [];
   if (VEHICLE_JOURNEY_CACHE[vehicleJourneyRef]) return VEHICLE_JOURNEY_CACHE[vehicleJourneyRef];
-  const url = ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/vehicle_journeys/${encodeURIComponent(vehicleJourneyRef)}/stop_points;
+  const url = {PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/vehicle_journeys/{encodeURIComponent(vehicleJourneyRef)}/stop_points;
   const data = await fetchJSON(url,{ apikey:API_KEY });
   const stops = (data.stop_points || []).map(sp => sp.name);
   VEHICLE_JOURNEY_CACHE[vehicleJourneyRef] = stops;
@@ -90,7 +90,7 @@ async function fetchStopsForJourney(vehicleJourneyRef){
 // Affichage par direction
 async function renderDepartures(id, title, data, icon, first, last){
   const el = document.getElementById(id);
-  let html = <div class="title-line"><img src="${icon}" class="icon-inline">${title}</div>;
+  let html = <div class="title-line"><img src="{icon}" class="icon-inline">{title}</div>;
   if (!data || data.length === 0){
     html += <ul><li>Aucun passage à venir</li></ul>;
   } else{
@@ -101,29 +101,29 @@ async function renderDepartures(id, title, data, icon, first, last){
       grouped[dir].push(d);
     });
     for (const dir in grouped){
-      html += <h4 class="direction-title">Direction ${dir}</h4><ul>;
+      html += <h4 class="direction-title">Direction {dir}</h4><ul>;
       // Afficher les 4 prochains passages de cette direction
       await Promise.all(grouped[dir].slice(0, 4).map(async d =>{
         const mvj = d.MonitoredVehicleJourney;
         const call = mvj.MonitoredCall;
         const expected = call.ExpectedDepartureTime || call.AimedDepartureTime;
         const delay = (call.ExpectedDepartureTime && call.AimedDepartureTime && call.ExpectedDepartureTime !== call.AimedDepartureTime)
-          ? <span class='delay'>(+${Math.round((new Date(call.ExpectedDepartureTime) - new Date(call.AimedDepartureTime)) / 60000)} min)</span> :"";
+          ? <span class='delay'>(+{Math.round((new Date(call.ExpectedDepartureTime) - new Date(call.AimedDepartureTime)) / 60000)} min)</span> :"";
         const isLast = mvj.FirstOrLastJourney?.value === "LAST_SERVICE_OF_DAY";
         const ref = getVehicleJourneyRef(mvj);
         let stopsHtml = "";
         try{
           const stops = await fetchStopsForJourney(ref);
-          if (stops.length) stopsHtml = <div class="defile-arrets">${stops.join(" – ")}</div>;
+          if (stops.length) stopsHtml = <div class="defile-arrets">{stops.join(" – ")}</div>;
         } catch{}
-        html += `<li>▶ ${formatTime(expected)} ${minutesUntil(expected)} ${delay} ${isLast ? "<span class='last-train'>(dernier train)</span>" :""}
-          ${stopsHtml}
+        html += `<li>▶ {formatTime(expected)} {minutesUntil(expected)} {delay} {isLast ? "<span class='last-train'>(dernier train)</span>" :""}
+          {stopsHtml}
         </li>`;
       }));
       html += </ul>;
     }
   }
-  html += <div class="schedule-extremes">Premier départ :${first || "-"}<br>Dernier départ :${last || "-"}</div>;
+  html += <div class="schedule-extremes">Premier départ :{first || "-"}<br>Dernier départ :{last || "-"}</div>;
   el.innerHTML = html;
 }
 
@@ -137,13 +137,13 @@ async function fetchTransport(stopKey, elementId){
       STOP_POINTS[stopKey].name,
       visits,
       STOP_POINTS[stopKey].icon,
-      localStorage.getItem(${stopKey}-first),
-      localStorage.getItem(${stopKey}-last)
+      localStorage.getItem({stopKey}-first),
+      localStorage.getItem({stopKey}-last)
     );
   } catch (e){
-    console.error(Erreur fetchTransport ${stopKey}:, e);
+    console.error(Erreur fetchTransport {stopKey}:, e);
     document.getElementById(elementId).innerHTML =
-      <div class="title-line"><img src="${STOP_POINTS[stopKey].icon}" class="icon-inline">${STOP_POINTS[stopKey].name}</div><div class="error">Données indisponibles</div>;
+      <div class="title-line"><img src="{STOP_POINTS[stopKey].icon}" class="icon-inline">{STOP_POINTS[stopKey].name}</div><div class="error">Données indisponibles</div>;
   }
 }
 
@@ -164,12 +164,12 @@ async function fetchSchedulesOncePerDay(){
       });
       times.sort();
       if (times.length){
-        const fmt = t => ${t.slice(0, 2)}:${t.slice(2, 4)};
-        localStorage.setItem(${key}-first, fmt(times[0]));
-        localStorage.setItem(${key}-last, fmt(times[times.length - 1]));
+        const fmt = t => {t.slice(0, 2)}:{t.slice(2, 4)};
+        localStorage.setItem({key}-first, fmt(times[0]));
+        localStorage.setItem({key}-last, fmt(times[times.length - 1]));
       }
     } catch (e){
-      console.error(Erreur fetchSchedulesOncePerDay ${key}:, e);
+      console.error(Erreur fetchSchedulesOncePerDay {key}:, e);
     }
   }
   localStorage.setItem("schedule-day", today);
@@ -178,7 +178,7 @@ async function fetchSchedulesOncePerDay(){
 // Vélib (via proxy)
 async function fetchVelib(stationId, elementId){
   try{
-    const url = ${PROXY}${VELIB_URL};
+    const url = {PROXY}{VELIB_URL};
     const data = await fetchJSON(url,{ apikey:API_KEY });
     const station = data.data.stations.find(s => s.station_id == stationId);
     if (!station) throw new Error("Station Vélib non trouvée");
@@ -187,9 +187,9 @@ async function fetchVelib(stationId, elementId){
     const free = station.num_docks_available || 0;
     document.getElementById(elementId).innerHTML = `
       <div class='title-line'><img src='img/picto-velib.svg' class='icon-inline'>Vélib'</div>
-      🚲 Mécaniques :${mechanical}<br>
-      ⚡ Électriques :${ebike}<br>
-      🅿 Places libres :${free}
+      🚲 Mécaniques :{mechanical}<br>
+      ⚡ Électriques :{ebike}<br>
+      🅿 Places libres :{free}
     `;
   } catch (e){
     console.error("Erreur Vélib:", e);
