@@ -1,32 +1,37 @@
-script.js:71 Uncaught TypeError: Cannot set properties of null (setting 'textContent')
-    at updateDateTime (script.js:71:55)
-    at refreshAll (script.js:129:3)
-    at script.js:138:1
-updateDateTime @ script.js:71
-refreshAll @ script.js:129
-(anonyme) @ script.js:138
-favicon.ico:1 
-            
-            
-           GET https://plero75.github.io/Vincennes/favicon.ico 404 (Not Found)
-script.js:71 Uncaught TypeError: Cannot set properties of null (setting 'textContent')
-    at updateDateTime (script.js:71:55)
-    at refreshAll (script.js:129:3)
-updateDateTime @ script.js:71
-refreshAll @ script.js:129
-setInterval
-(anonyme) @ script.js:137
-script.js:71 Uncaught TypeError: Cannot set properties of null (setting 'textContent')
-    at updateDateTime (script.js:71:55)
-    at refreshAll (script.js:129:3)
-updateDateTime @ script.js:71
-refreshAll @ script.js:129
-setInterval
-(anonyme) @ script.js:137
-script.js:71 Uncaught TypeError: Cannot set properties of null (setting 'textContent')
-    at updateDateTime (script.js:71:55)
-    at refreshAll (script.js:129:3)
-updateDateTime @ script.js:71
-refreshAll @ script.js:129
-setInterval
-(anonyme) @ script.js:137
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Transports Hippodrome Vincennes</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="intro">
+    <h1>🟢 Disponibilités des transports en commun autour de l’Hippodrome</h1>
+    <p>
+      Nous sommes le <span id="current-date">--/--/----</span>,
+      il est <span id="current-time">--:--</span>
+    </p>
+  </div>
+
+  <div id="dashboard">
+    <section id="meteo"></section>
+    <section id="trafic"></section>
+
+    <section id="bus77-content"></section>
+    <section id="bus201-content"></section>
+    <section id="rer-content"></section>
+
+    <section id="velib-vincennes"></section>
+    <section id="velib-breuil"></section>
+  </div>
+
+  <div id="footer">
+    <p id="last-update">Dernière mise à jour : --/--/---- --:--</p>
+    <p>© Hippodrome Paris-Vincennes</p>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
