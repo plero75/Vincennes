@@ -1,32 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>Tableau de bord – Hippodrome</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Transports Hippodrome Vincennes</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <header>
-    <h1>Disponibilités des transports en commun autour de l’Hippodrome</h1>
-    <div id="datetime"></div>
-  </header>
+  <div id="intro">
+    <h1>🟢 Disponibilités des transports en commun autour de l’Hippodrome</h1>
+    <p>
+      Nous sommes le <span id="current-date">--/--/----</span>,
+      il est <span id="current-time">--:--</span>
+    </p>
+  </div>
 
-  <main>
-    <section id="weather" class="card">Chargement météo…</section>
-    <section id="trafic-info" class="card">Chargement info trafic…</section>
+  <div id="dashboard">
+    <section id="meteo"></section>
+    <section id="trafic"></section>
 
-    <section id="rer-content" class="card"></section>
-    <section id="bus77-content" class="card"></section>
-    <section id="bus201-content" class="card"></section>
+    <section id="bus77-content"></section>
+    <section id="bus201-content"></section>
+    <section id="rer-content"></section>
 
-    <section id="velib-vincennes" class="card"></section>
-    <section id="velib-breuil" class="card"></section>
-  </main>
+    <section id="velib-vincennes"></section>
+    <section id="velib-breuil"></section>
+  </div>
 
-  <footer>
-    <div id="last-update"></div>
-  </footer>
+  <div id="footer">
+    <p id="last-update">Dernière mise à jour : --/--/---- --:--</p>
+    <p>© Hippodrome Paris-Vincennes</p>
+  </div>
 
   <script src="script.js"></script>
 </body>
