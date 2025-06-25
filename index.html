@@ -3,34 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>Disponibilités des transports en commun autour de l’hippodrome</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=1080, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
     <h1>Disponibilités des transports en commun autour de l’hippodrome</h1>
-    <div class="date-heure">
-      <span id="display-date"></span> — Il est <span id="display-time"></span>
+    <div class="dateline">
+      Nous sommes le <span id="current-date"></span> — il est <span id="current-time"></span>
     </div>
   </header>
+
   <main>
-    <section class="row">
-      <div class="card meteo-card" id="weather-content"></div>
-      <div class="card" id="info-trafic-petitfute"></div>
-    </section>
-    <section class="row">
-      <div class="card" id="rer-content"></div>
-      <div class="card" id="bus77-content"></div>
-      <div class="card" id="bus201-content"></div>
-    </section>
-    <section class="row">
-      <div class="card velib-card" id="velib-vincennes"></div>
-      <div class="card velib-card" id="velib-breuil"></div>
-    </section>
+    <section id="meteo" class="bloc bloc-meteo"></section>
+    <section id="infotrafic" class="bloc bloc-traff"></section>
+    <section id="rer-content" class="bloc bloc-transport"></section>
+    <section id="bus77-content" class="bloc bloc-transport"></section>
+    <section id="bus201-content" class="bloc bloc-transport"></section>
+    <section id="velib-vincennes" class="bloc bloc-velib"></section>
+    <section id="velib-breuil" class="bloc bloc-velib"></section>
   </main>
+
   <footer>
-    <span id="last-update"></span>
+    <div class="footer-note">
+      © 2025 – Hippodrome Paris-Vincennes &nbsp;–&nbsp; Affichage en temps réel.
+    </div>
   </footer>
+
   <script src="script.js"></script>
 </body>
 </html>
