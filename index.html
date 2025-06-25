@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Disponibilités des transports en commun autour de l’hippodrome</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>Disponibilités des transports en commun autour de l’hippodrome</h1>
+    <div class="date-heure">
+      <span id="display-date"></span> — Il est <span id="display-time"></span>
+    </div>
+  </header>
+  <main>
+    <section class="row">
+      <div class="card meteo-card" id="weather-content"></div>
+      <div class="card" id="info-trafic-petitfute"></div>
+    </section>
+    <section class="row">
+      <div class="card" id="rer-content"></div>
+      <div class="card" id="bus77-content"></div>
+      <div class="card" id="bus201-content"></div>
+    </section>
+    <section class="row">
+      <div class="card velib-card" id="velib-vincennes"></div>
+      <div class="card velib-card" id="velib-breuil"></div>
+    </section>
+  </main>
+  <footer>
+    <span id="last-update"></span>
+  </footer>
+  <script src="script.js"></script>
+</body>
+</html>
