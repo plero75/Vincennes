@@ -1,0 +1,139 @@
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background: #171c23;
+  color: #fff;
+  margin: 0;
+  padding: 0;
+}
+header {
+  text-align: center;
+  margin: 2vw 0 1vw 0;
+}
+h1 {
+  font-size: 2.3vw;
+  margin-bottom: 0.3vw;
+  color: #ffd900;
+}
+.date-heure {
+  font-size: 1.2vw;
+  color: #fff7;
+}
+main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1vw;
+  display: flex;
+  flex-direction: column;
+  gap: 1vw;
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  gap: 1vw;
+  margin-bottom: 1vw;
+  justify-content: space-between;
+}
+.card {
+  flex: 1 1 0px;
+  background: #232f47;
+  border-radius: 18px;
+  box-shadow: 0 6px 24px #0007;
+  padding: 1vw;
+  min-width: 0;
+  min-height: 190px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 0.2vw;
+  font-size: 1.08em;
+}
+.velib-card {
+  border-top: 6px solid #2fa6ff;
+}
+.meteo-card {
+  border-top: 6px solid #ffd900;
+}
+.title-line {
+  font-size: 1.25em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 0.7em;
+  margin-bottom: 0.3em;
+}
+.icon-inline {
+  width: 32px; height: 32px;
+  vertical-align: middle;
+}
+.direction-title {
+  font-size: 1.08em;
+  margin: 0.8em 0 0.2em 0;
+  color: #ffd900;
+}
+ul {
+  margin: 0.3em 0 0 0.7em;
+  padding: 0;
+  list-style: none;
+}
+li {
+  margin-bottom: 0.38em;
+}
+.temps {
+  color: #ffd900;
+  margin-left: 0.2em;
+}
+.imminent {
+  color: #0c0;
+  font-weight: bold;
+  margin-left: 0.2em;
+}
+.delay {
+  color: #ffa700;
+  margin-left: 0.2em;
+  font-weight: bold;
+}
+.last-train {
+  color: #f55;
+  font-weight: bold;
+  margin-left: 0.3em;
+}
+.liste-arrets {
+  display: block;
+  font-size: 0.99em;
+  color: #fff8;
+  margin-left: 0.8em;
+  margin-top: 2px;
+  overflow-x: auto;
+  white-space: nowrap;
+  max-width: 99%;
+  animation: defile-arrets 15s linear infinite;
+}
+@keyframes defile-arrets {
+  0% { transform: translateX(30%);}
+  100% { transform: translateX(-50%);}
+}
+.error {
+  color: #ff8e8e;
+  font-weight: 600;
+  margin-top: 1em;
+}
+.schedule-extremes {
+  font-size: 0.97em;
+  margin-top: 0.7em;
+  color: #ffe387;
+}
+footer {
+  color: #fff6;
+  font-size: 1.01em;
+  padding: 1vw 0 2vw 0;
+  text-align: center;
+  margin-top: 2vw;
+}
+
+@media (max-width: 900px) {
+  h1 { font-size: 4.3vw; }
+  .date-heure { font-size: 2.2vw;}
+  main { padding: 0 0.2vw;}
+  .row { flex-direction: column; gap: 1vw;}
+  .card { font-size: 1.1em; margin: 0.7vw 0;}
+}
