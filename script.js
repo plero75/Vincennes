@@ -5,28 +5,28 @@ const VELIB_URL = "https://prim.iledefrance-mobilites.fr/marketplace/velib/stati
 
 const STOP_POINTS ={
   rer:{
-    name: "RER A Joinville-le-Pont",
-    realtimeUrl: ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:43135:,
-    scheduleUrl: ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:monomodalStopPlace:43135/route_schedules?line=line:IDFM:C01742&from_datetime=,
-    icon: "img/picto-rer-a.svg"
+    name:"RER A Joinville-le-Pont",
+    realtimeUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:43135:,
+    scheduleUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:monomodalStopPlace:43135/route_schedules?line=line:IDFM:C01742&from_datetime=,
+    icon:"img/picto-rer-a.svg"
   },
   bus77:{
-    name: "BUS 77 Hippodrome de Vincennes",
-    realtimeUrl: ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463641:,
-    scheduleUrl: ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463640/route_schedules?line=line:IDFM:C02251&from_datetime=,
-    icon: "img/picto-bus.svg"
+    name:"BUS 77 Hippodrome de Vincennes",
+    realtimeUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463641:,
+    scheduleUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463640/route_schedules?line=line:IDFM:C02251&from_datetime=,
+    icon:"img/picto-bus.svg"
   },
   bus201:{
-    name: "BUS 201 Ecole du Breuil",
-    realtimeUrl: ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463644:,
-    scheduleUrl: ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463646/route_schedules?line=line:IDFM:C01219&from_datetime=,
-    icon: "img/picto-bus.svg"
+    name:"BUS 201 Ecole du Breuil",
+    realtimeUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/stop-monitoring?MonitoringRef=STIF:StopPoint:Q:463644:,
+    scheduleUrl:${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/stop_points/stop_point:IDFM:463646/route_schedules?line=line:IDFM:C01219&from_datetime=,
+    icon:"img/picto-bus.svg"
   }
 };
 
 const VELIB_IDS ={
-  vincennes: "1074333296",
-  breuil: "508042092"
+  vincennes:"1074333296",
+  breuil:"508042092"
 };
 
 // Cache des arrêts de parcours
@@ -43,16 +43,16 @@ async function fetchJSON(url, headers ={}){
 function updateDateTime(){
   const now = new Date();
   document.getElementById("current-date").textContent =
-    now.toLocaleDateString("fr-FR",{ weekday: "long", year: "numeric", month: "long", day: "2-digit" });
+    now.toLocaleDateString("fr-FR",{ weekday:"long", year:"numeric", month:"long", day:"2-digit" });
   document.getElementById("current-time").textContent =
-    now.toLocaleTimeString("fr-FR",{ hour: "2-digit", minute: "2-digit" });
+    now.toLocaleTimeString("fr-FR",{ hour:"2-digit", minute:"2-digit" });
 }
 
 function formatTime(iso){
   if (!iso) return "-";
   const d = new Date(iso);
   if (isNaN(d)) return "-";
-  return d.toLocaleTimeString("fr-FR",{ hour: "2-digit", minute: "2-digit" });
+  return d.toLocaleTimeString("fr-FR",{ hour:"2-digit", minute:"2-digit" });
 }
 
 function minutesUntil(dt){
@@ -81,7 +81,7 @@ async function fetchStopsForJourney(vehicleJourneyRef){
   if (!vehicleJourneyRef) return [];
   if (VEHICLE_JOURNEY_CACHE[vehicleJourneyRef]) return VEHICLE_JOURNEY_CACHE[vehicleJourneyRef];
   const url = ${PROXY}https://prim.iledefrance-mobilites.fr/marketplace/v2/navitia/vehicle_journeys/${encodeURIComponent(vehicleJourneyRef)}/stop_points;
-  const data = await fetchJSON(url,{ apikey: API_KEY });
+  const data = await fetchJSON(url,{ apikey:API_KEY });
   const stops = (data.stop_points || []).map(sp => sp.name);
   VEHICLE_JOURNEY_CACHE[vehicleJourneyRef] = stops;
   return stops;
@@ -108,7 +108,7 @@ async function renderDepartures(id, title, data, icon, first, last){
         const call = mvj.MonitoredCall;
         const expected = call.ExpectedDepartureTime || call.AimedDepartureTime;
         const delay = (call.ExpectedDepartureTime && call.AimedDepartureTime && call.ExpectedDepartureTime !== call.AimedDepartureTime)
-          ? <span class='delay'>(+${Math.round((new Date(call.ExpectedDepartureTime) - new Date(call.AimedDepartureTime)) / 60000)} min)</span> : "";
+          ? <span class='delay'>(+${Math.round((new Date(call.ExpectedDepartureTime) - new Date(call.AimedDepartureTime)) / 60000)} min)</span> :"";
         const isLast = mvj.FirstOrLastJourney?.value === "LAST_SERVICE_OF_DAY";
         const ref = getVehicleJourneyRef(mvj);
         let stopsHtml = "";
@@ -116,21 +116,21 @@ async function renderDepartures(id, title, data, icon, first, last){
           const stops = await fetchStopsForJourney(ref);
           if (stops.length) stopsHtml = <div class="defile-arrets">${stops.join(" – ")}</div>;
         } catch{}
-        html += `<li>▶ ${formatTime(expected)} ${minutesUntil(expected)} ${delay} ${isLast ? "<span class='last-train'>(dernier train)</span>" : ""}
+        html += `<li>▶ ${formatTime(expected)} ${minutesUntil(expected)} ${delay} ${isLast ? "<span class='last-train'>(dernier train)</span>" :""}
           ${stopsHtml}
         </li>`;
       }));
       html += </ul>;
     }
   }
-  html += <div class="schedule-extremes">Premier départ : ${first || "-"}<br>Dernier départ : ${last || "-"}</div>;
+  html += <div class="schedule-extremes">Premier départ :${first || "-"}<br>Dernier départ :${last || "-"}</div>;
   el.innerHTML = html;
 }
 
 // Chargement données transports
 async function fetchTransport(stopKey, elementId){
   try{
-    const data = await fetchJSON(STOP_POINTS[stopKey].realtimeUrl,{ apikey: API_KEY });
+    const data = await fetchJSON(STOP_POINTS[stopKey].realtimeUrl,{ apikey:API_KEY });
     const visits = data?.Siri?.ServiceDelivery?.StopMonitoringDelivery?.[0]?.MonitoredStopVisit || [];
     await renderDepartures(
       elementId,
@@ -154,7 +154,7 @@ async function fetchSchedulesOncePerDay(){
   for (let key in STOP_POINTS){
     try{
       const url = STOP_POINTS[key].scheduleUrl + today.replace(/-/g, "") + "T000000";
-      const data = await fetchJSON(url,{ apikey: API_KEY });
+      const data = await fetchJSON(url,{ apikey:API_KEY });
       const rows = data.route_schedules?.[0]?.table?.rows || [];
       const times = [];
       rows.forEach(row =>{
@@ -179,7 +179,7 @@ async function fetchSchedulesOncePerDay(){
 async function fetchVelib(stationId, elementId){
   try{
     const url = ${PROXY}${VELIB_URL};
-    const data = await fetchJSON(url,{ apikey: API_KEY });
+    const data = await fetchJSON(url,{ apikey:API_KEY });
     const station = data.data.stations.find(s => s.station_id == stationId);
     if (!station) throw new Error("Station Vélib non trouvée");
     const mechanical = station.num_bikes_available_types.find(b => b.mechanical !== undefined)?.mechanical || 0;
@@ -187,9 +187,9 @@ async function fetchVelib(stationId, elementId){
     const free = station.num_docks_available || 0;
     document.getElementById(elementId).innerHTML = `
       <div class='title-line'><img src='img/picto-velib.svg' class='icon-inline'>Vélib'</div>
-      🚲 Mécaniques : ${mechanical}<br>
-      ⚡ Électriques : ${ebike}<br>
-      🅿 Places libres : ${free}
+      🚲 Mécaniques :${mechanical}<br>
+      ⚡ Électriques :${ebike}<br>
+      🅿 Places libres :${free}
     `;
   } catch (e){
     console.error("Erreur Vélib:", e);
@@ -205,7 +205,7 @@ async function fetchMeteo(){
   // à adapter selon ton API préférée
   document.getElementById("meteo").innerHTML = `
     <b>Météo</b><br>
-    Température : 34°C<br>
+    Température :34°C<br>
     ☀ Soleil
   `;
 }
@@ -215,8 +215,8 @@ async function fetchInfoTrafic(){
   document.getElementById("infotrafic").innerHTML = `
     <b>Info trafic</b><br>
     Travaux d'été RER A<br>
-    Bus 77 : arrêt Hippodrome en service<br>
-    Bus 201 : trafic normal
+    Bus 77 :arrêt Hippodrome en service<br>
+    Bus 201 :trafic normal
   `;
 }
 
