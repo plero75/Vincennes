@@ -2,37 +2,46 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Transports Hippodrome Vincennes</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#07111f" />
+  <title>Mobili — Hippodrome Paris-Vincennes</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="intro">
-    <h1>🟢 Disponibilités des transports en commun autour de l’Hippodrome</h1>
-    <p>
-      Nous sommes le <span id="current-date">--/--/----</span>,
-      il est <span id="current-time">--:--</span>
-    </p>
-  </div>
+  <main class="screen-shell">
+    <header class="topbar">
+      <div class="brand-block">
+        <div class="eyebrow">MOBILITÉ</div>
+        <h1>Au départ de l’Hippodrome Paris-Vincennes</h1>
+      </div>
+      <div class="topbar-meta">
+        <div class="status-pill" id="global-status">Situation normale</div>
+        <div class="weather" id="weather">--° · --</div>
+        <div class="clock-block">
+          <div id="current-time">--:--</div>
+          <div id="current-date">-- --- ----</div>
+        </div>
+      </div>
+    </header>
 
-  <div id="dashboard">
-    <section id="meteo"></section>
-    <section id="trafic"></section>
+    <section class="notice-strip" id="notice-strip" hidden>
+      <span class="notice-dot"></span>
+      <span id="notice-text"></span>
+    </section>
 
-    <section id="bus77-content"></section>
-    <section id="bus201-content"></section>
-    <section id="rer-content"></section>
+    <section class="transport-grid">
+      <article class="transport-card rer-card" id="rer-content"></article>
+      <article class="transport-card" id="bus77-content"></article>
+      <article class="transport-card" id="bus201-content"></article>
+      <article class="transport-card velib-card" id="velib-vincennes"></article>
+    </section>
 
-    <section id="velib-vincennes"></section>
-    <section id="velib-breuil"></section>
-  </div>
-
-  <div id="footer">
-    <p id="last-update">Dernière mise à jour : --/--/---- --:--</p>
-    <p>© Hippodrome Paris-Vincennes</p>
-  </div>
+    <footer class="footer-bar">
+      <div>Horaires filtrés selon le temps réel nécessaire pour rejoindre chaque arrêt.</div>
+      <div id="last-update">Mise à jour --:--</div>
+    </footer>
+  </main>
 
   <script src="script.js"></script>
 </body>
 </html>
-
